@@ -47,9 +47,16 @@ func createDBInstance(){
 	}
 	fmt.Println("Connected to MongoDB!")
 
+	collection = client.Database(dbName).Collection(collName)
+	fmt.Println("Collection instance created!")
 }
 
 func GetAllTasks(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	payload := GetAllTasks()
+	json.NewEncoder(w).Encode(payload)
+
 
 }
 
