@@ -60,7 +60,11 @@ func GetAllTasks(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func CreateTask(){
+func CreateTask(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	payload := createTask()
+	json.NewEncoder(w).Encode(payload)
 
 }
 
