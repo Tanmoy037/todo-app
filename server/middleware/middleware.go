@@ -119,7 +119,7 @@ func DeleteAllTasks(w http.ResponseWriter, r *http.Request){
 }
 
 func getAllTasks(){
-	cur, err := collection.Find(context.TODO(), bson.D{{}})
+	cur, err := collection.Find(context.Background(), bson.D{{}})
 	if err != nil {
 		log.Fatal(err)
 	}
