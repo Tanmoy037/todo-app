@@ -110,7 +110,7 @@ func DeleteTask(w http.ResponseWriter, r *http.Request){
 
 }
 
-func deleteAllTasks(w http.ResponseWriter, r *http.Request){
+func DeleteAllTasks(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	count := deleteAllTasks()
@@ -119,11 +119,36 @@ func deleteAllTasks(w http.ResponseWriter, r *http.Request){
 }
 
 func getAllTasks(){
+	cur, err := collection.Find(context.TODO(), bson.D{{}})
+	if err != nil {
+		log.Fatal(err)
+	}
+	var results []primitive.M
+	for cur.Next(context.Background()){
+		var result bson.M
+		e := cur.Decode(&result)
+		if e != nil {
+			log.Fatal(e)
+		}
+		results = append(results, result)
 
+	}
+	if err := cur.Err(); err != nil {
+		log.Fatal(err)
+	}
+	cur.Close(context.Background())
+	return results
 }
 
 func TaskComplete(task string){
-
+	id, _ := primitive.ObjectIDFromHex(task)
+	filter := bson.M{"_id":id}
+	update := bson.M{"$set":bson.M{"status", true}}
+	result, err := collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("modified count", result.ModifiedCount)
 }
 
 func insertOneTask(){
@@ -139,5 +164,5 @@ func deleteOneTask(){
 }
 
 func deleteAllTasks(){
-	
+
 }
