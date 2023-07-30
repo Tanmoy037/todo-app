@@ -87,22 +87,57 @@ func TaskComplete(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func UndoTask(){
+func UndoTask(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "PUT")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	params := mux.Vars(r)
+	UndoTask(params["id"])
+	json.NewEncoder(w).Encode(params["id"])
 
 }
 
-func DeleteTask(){
+func DeleteTask(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	params := mux.Vars(r)
+	DeleteTask(params["id"])
 
 }
 
-func deleteAllTasks(){
+func deleteAllTasks(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	count := deleteAllTasks()
+	json.NewEncoder(w).Encode(count)
 
 }
 
 func getAllTasks(){
-	
+
 }
 
 func TaskComplete(task string){
 
+}
+
+func insertOneTask(){
+
+}
+
+func UndoTask(){
+
+}
+
+func deleteOneTask(){
+
+}
+
+func deleteAllTasks(){
+	
 }
