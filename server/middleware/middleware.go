@@ -175,7 +175,7 @@ func UndoTask(task string){
 }
 
 func deleteOneTask(){
-	id, _ : primitive.ObjectIDFromHex(task)
+	id, _ := primitive.ObjectIDFromHex(task)
 	filter := bson.M{"_id":id}
 	d, err := collection.DeleteOne(context.Background(), filter)
 	if err != nil {
